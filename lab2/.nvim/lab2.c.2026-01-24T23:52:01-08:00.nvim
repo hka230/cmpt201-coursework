@@ -1,0 +1,35 @@
+#define _POSIX_C_SOURCE 200809L
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+int main() {
+  char *buff = NULL;
+  size_t size = 0;
+
+  while (getline(&buff, &size, stdin) != -1) {
+
+    char *tok;
+    char *saveptr;
+    tok = strtok_r(buff, "\n", &saveptr);
+
+    //printf("%s\n", tok);
+    pid_t pid = fork(); //0 = child -1 = fail
+                        
+    if (pid == -1) {//fail
+      
+    }
+    else if (pid == 0) {//child
+
+    }
+    else {//parent
+
+    }
+  }
+  perror("no getline input, ending program");
+  free(buff);
+}
+
+
