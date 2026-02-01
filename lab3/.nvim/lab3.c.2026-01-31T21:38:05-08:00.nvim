@@ -1,0 +1,40 @@
+#define _POSIX_C_SOURCE 200809L
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+
+  int indexer = 0;
+
+  char *thing[5] = {NULL};
+
+  char *buffer = NULL;
+  size_t size = 0;
+
+  printf("Enter Input:");
+
+  while (getline(&buffer, &size, stdin) != -1) {
+
+    if (strcmp(buffer, "print\n") == 0) {
+      
+      for(int i = 0; i < 5; i++) {
+        printf("%s",thing[i]);
+      }
+
+    } else {
+
+      free(thing[indexer]);
+      thing[indexer] = buffer;
+      indexer++;
+      if(indexer > 4) indexer = 0;
+    
+    }
+
+    printf("\nEnter Input:");
+  }
+  
+  for(int k = 0; k < 5; k++)
+    free(thing[k]);
+  return 0;
+}

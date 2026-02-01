@@ -1,0 +1,40 @@
+#define _POSIX_C_SOURCE 200809L
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+
+  int indexer = 0; //keep track of added order
+
+  char *thing[5] = {NULL}; //null so i can use free
+
+  char *buffer = NULL;
+  size_t size = 0;
+
+  printf("Enter Input:");
+
+  while (getline(&buffer, &size, stdin) != -1) {
+
+    free(thing[indexer % 5]); //modulo 5 makes it loop back to index 0
+    thing[indexer % 5] = buffer;
+    indexer++;
+
+    if (strcmp(buffer, "print\n") == 0) {
+
+      for (int i = indexer; i < indexer + 5; i++) {
+        if (thing[i % 5] != NULL) //make it not print initial nulls
+          printf("%s", thing[i % 5]);
+      }
+    }
+
+    buffer = NULL; //reset buffer
+    size = 0;
+
+    printf("\nEnter Input:");
+  }
+
+  for (int k = 0; k < 5; k++) //free the array
+    free(thing[k]);
+  return 0;
+}
